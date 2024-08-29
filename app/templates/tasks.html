@@ -1,37 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Task Manager</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Task Manager</h1>
-        <form method="POST" action="{{ url_for('main.add_task') }}">
+    <div class="container">
+        <h1 class="mb-4">Task Manager</h1>
+        <form action="{{ url_for('add_task') }}" method="post">
             <div class="form-group">
-                <input type="text" name="title" class="form-control" placeholder="Task Title" required>
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <div class="form-group">
-                <textarea name="description" class="form-control" placeholder="Task Description"></textarea>
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description"></textarea>
             </div>
             <div class="form-group">
-                <input type="date" name="due_date" class="form-control" required>
+                <label for="due_date">Due Date</label>
+                <input type="date" class="form-control" id="due_date" name="due_date" required>
             </div>
             <button type="submit" class="btn btn-primary">Add Task</button>
         </form>
-        <ul class="list-group mt-4">
+        <hr>
+        <div class="card-columns">
             {% for task in tasks %}
-                <li class="list-group-item {{ 'completed' if task.completed else '' }}">
-                    {{ task.title }} - {{ task.due_date.strftime('%Y-%m-%d') }}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ task.due_date.strftime('%Y-%m-%d') }}</h6>
+                    <p class="card-text">{{ task.description }}</p>
                     {% if not task.completed %}
-                        <a href="{{ url_for('main.complete_task', task_id=task.id) }}" class="btn btn-success btn-sm float-right">Complete</a>
+                    <a href="{{ url_for('complete_task', task_id=task.id) }}" class="btn btn-success">Complete</a>
                     {% endif %}
-                </li>
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
