@@ -2,8 +2,8 @@ import requests
 import psycopg2
 from datetime import datetime
 
-TELEGRAM_BOT_TOKEN = '7211412404:AAFTO0ud7ljRciRCCleffFZFKqdxKESzSGs'
-TELEGRAM_CHAT_ID = '5550108562'
+TELEGRAM_BOT_TOKEN = 'token'
+TELEGRAM_CHAT_ID = 'chat id'
 DATABASE_URL = 'postgresql://task_manager_user:12345678@127.0.0.1/task_manager_db'
 
 def send_telegram_message(message):
